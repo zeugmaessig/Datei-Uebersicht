@@ -13,7 +13,6 @@ const items = ref([
     { id: 3, title: 'Datei3', fileType: 'Excel', category: 'Tabelle', uploadedOn: '2024-01-05', checked: true, actions: ['Öffnen', 'Löschen', 'Teilen'] }
 ]);
 
-// Filter-Konfiguration
 const filters = ref({
     global: { value: '' },
     fileType: { value: null },
@@ -22,15 +21,13 @@ const filters = ref({
     uploadedOn: { value: null }
 });
 
-// Auswahl der Checkboxen speichern
-const selectedItems = ref([]);  // Hier werden die ausgewählten Items gespeichert
+const selectedItems = ref([]);  
 
-// Daten für Filter
-const fileType = ref([
-    'PDF','jpg','word',
+const fileTypeFilterOptions = ref([
+    'PDF','jpg','word'
 ]);
 
-const categories = ref([
+const categoryFilterOptions = ref([
     'Dokumentation','Bericht','Tabelle'
 ]);
 
@@ -76,7 +73,7 @@ const clearFilter = () => {
           {{ data.fileType }}
         </template>
         <template #filter="{ filterModel, filterCallback }">
-          <Select v-model="filterModel.value" :options="fileType" placeholder="Dateityp wählen" showClear @change="filterCallback()" />
+          <Select v-model="filterModel.value" :options="fileTypeFilterOptions" placeholder="Dateityp wählen" showClear @change="filterCallback()" />
         </template>
       </Column>
 
@@ -85,7 +82,7 @@ const clearFilter = () => {
           {{ data.category }}
         </template>
         <template #filter="{ filterModel, filterCallback }">
-          <Select v-model="filterModel.value" :options="categories" placeholder="Kategorie wählen" showClear @change="filterCallback()" />
+          <Select v-model="filterModel.value" :options="categoryFilterOptions" placeholder="Kategorie wählen" showClear @change="filterCallback()" />
         </template>
       </Column>
 
