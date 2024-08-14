@@ -1,17 +1,21 @@
 //import 'primeflex/primeflex.css';
 import PrimeVue from 'primevue/config';
-import Aura from '@primevue/themes/aura';
-
+import Lara from '@primevue/themes/lara';
 
 
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
-
 const app = createApp(App);
+
 app.use(PrimeVue, {
     theme: {
-        preset: Aura
+        preset: Lara,
+    },
+    options: {
+        prefix: 'p',
+        darkModeSelector: 'system',
+        cssLayer: false
     }
 });
+app.mount("#app");
