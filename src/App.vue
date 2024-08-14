@@ -5,8 +5,6 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
-import Checkbox from 'primevue/checkbox';
-import DatePicker from 'primevue/datepicker';
 
 // Beispiel-Daten für die DataTable
 const items = ref([
@@ -15,7 +13,7 @@ const items = ref([
     { id: 3, title: 'Datei3', fileType: 'Excel', category: 'Tabelle', uploadedOn: '2024-01-05', checked: true, actions: ['Öffnen', 'Löschen', 'Teilen'] }
 ]);
 
-// Filtermodel für globale und spezifische Filter
+// Filter-Konfiguration
 const filters = ref({
     global: { value: '' },
     fileType: { value: null },
@@ -24,9 +22,10 @@ const filters = ref({
     uploadedOn: { value: null }
 });
 
-const loading = ref(false); // Zum Anzeigen des Ladezustands
+// Auswahl der Checkboxen speichern
+const selectedItems = ref([]);  // Hier werden die ausgewählten Items gespeichert
 
-// Beispiel-Optionen für Filter (Select)
+// Daten für Filter
 const fileType = ref([
     'PDF','jpg','word',
 ]);
@@ -36,6 +35,13 @@ const categories = ref([
 ]);
 
 const formatDate = (date: string) => new Date(date).toLocaleDateString();
+
+const filterByYear = (dataDate: string, filterModel: any) => {
+    if (!filterModel.value) return true;
+    const year = new Date(dataDate).getFullYear();
+    const selectedYear = new Date(filterModel.value).getFullYear();
+    return year === selectedYear;
+};
 
 const clearFilter = () => {
     filters.value.fileType.value = null;
@@ -51,24 +57,21 @@ const clearFilter = () => {
       :value="items"
       v-model:filters="filters"
       paginator
+      removableSort
       :rows="10"
       dataKey="id"
-      filterDisplay="menu"
-      :loading="loading"
+      filterDisplay="menu" 
       :globalFilterFields="['fileType', 'category', 'title', 'uploadedOn']"
+      selectionMode="multiple"
+      v-model:selection="selectedItems"
     >
-
 
       <template #empty> Keine Dateien gefunden. </template>
       <template #loading> Daten werden geladen. Bitte warten. </template>
 
-      <Column field="checked" header="Auswahl" bodyClass="text-center" style="min-width: 8rem">
-        <template #body="{ data }">
-          <Checkbox v-model="data.checked" />
-        </template>
-      </Column>
+      <Column selectionMode="multiple" headerStyle="width: 3rem" />
 
-      <Column field="fileType" header="Dateityp" style="min-width: 12rem">
+      <Column sortable field="fileType" header="Dateityp" style="min-width: 12rem">
         <template #body="{ data }">
           {{ data.fileType }}
         </template>
@@ -77,7 +80,7 @@ const clearFilter = () => {
         </template>
       </Column>
 
-      <Column field="category" header="Kategorie" style="min-width: 12rem">
+      <Column sortable field="category" header="Kategorie" style="min-width: 12rem">
         <template #body="{ data }">
           {{ data.category }}
         </template>
@@ -86,7 +89,7 @@ const clearFilter = () => {
         </template>
       </Column>
 
-      <Column field="title" header="Titel" style="min-width: 12rem">
+      <Column sortable field="title" header="Titel" style="min-width: 12rem">
         <template #body="{ data }">
           {{ data.title }}
         </template>
@@ -95,12 +98,9 @@ const clearFilter = () => {
         </template>
       </Column>
 
-      <Column field="uploadedOn" header="Hochgeladen am" dataType="date" style="min-width: 12rem">
+      <Column sortable field="uploadedOn" header="Hochgeladen am" dataType="date" style="min-width: 12rem" :filter="true" :filterFunction="filterByYear">
         <template #body="{ data }">
           {{ formatDate(data.uploadedOn) }}
-        </template>
-        <template #filter="{ filterModel, filterCallback }">
-          <DatePicker v-model="filterModel.value" dateFormat="dd/mm/yy" placeholder="tt/mm/jjjj" @change="filterCallback()" />
         </template>
       </Column>
 
@@ -112,6 +112,7 @@ const clearFilter = () => {
         </template>
       </Column>
     </DataTable>
+
   </div>
 </template>
 
