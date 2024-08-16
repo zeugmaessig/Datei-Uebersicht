@@ -1,8 +1,9 @@
 <template>
-    <div>
-      <UploadDialog :items="items" :updateItems="updateItems" />
-      <FileTable :items="items" :updateItems="updateItems" />
-    </div>
+  <h1>Dateitabelle für Dokumente</h1>
+  <p>Dateien können "hochgeladen" werden, die Tabelle speichert dabei die Dateieigenschaften und den lokalen Pfad. Beim Öffnen wird dieser aufgerufen, beim Löschen der Eintrag entfernt.</p>
+  <p>Ein Klick auf den Titel der Datei bearbeitet nur den Titel der Datei im Array, nicht den lokalen Dateinamen.</p>
+  <UploadDialog :items="items" :updateItems="updateItems" />
+  <FileTable :items="items" :updateItems="updateItems" />
 </template>
   
 <script setup lang="ts">
@@ -11,9 +12,9 @@
   import FileTable from './components/FileTable.vue';
   
   const items = ref([
-    { title: 'Datei1', fileType: 'PDF', category: 'Vertrag', uploadedOn: '2024-01-15', url: '' },
-    { title: 'Datei2', fileType: 'Word', category: 'Pläne', uploadedOn: '2024-01-10', url: '' },
-    { title: 'Datei3', fileType: 'Excel', category: 'Vertrag', uploadedOn: '2024-01-05', url: '' }
+    { title: 'LeereDatei1', fileType: 'PDF', category: 'Vertrag', uploadedOn: '2024-08-15', url: '' },
+    { title: 'LeereDatei2', fileType: 'DOC', category: 'Pläne', uploadedOn: '2024-08-10', url: '' },
+    { title: 'LeereDatei3', fileType: 'JPG', category: 'Vertrag', uploadedOn: '2024-08-05', url: '' }
   ]);
   
   const updateItems = (newItems: any) => {

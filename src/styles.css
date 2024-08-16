@@ -1,0 +1,13 @@
+/* Custom Theme Anpassung an Immoflow Style*/
+
+:root {
+    --p-primary-font-color: #334155;
+    --p-font-family: "Inter var", sans-serif;
+}
+
+*{
+    color-scheme: light !important;
+    font-family: var(--p-font-family);
+    color: var(--p-primary-font-color) !important;
+}
+

@@ -1,6 +1,8 @@
-//import 'primeflex/primeflex.css';
+import 'primeflex/primeflex.css';
 import PrimeVue from 'primevue/config';
 import Lara from '@primevue/themes/lara';
+import 'primeicons/primeicons.css';
+import './styles.css';
 
 
 import { createApp } from 'vue'
@@ -14,8 +16,6 @@ app.use(PrimeVue, {
     },
     options: {
         prefix: 'p',
-        darkModeSelector: 'system',
-        cssLayer: false
     }
 });
 app.mount("#app");
